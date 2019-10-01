@@ -55,11 +55,27 @@ shown as processes as well as external entities to represent their dual cyber an
 All processes are assumed to have some resources and logs; only very important ones are shown at
 this level.
 
-![DFD-0](diagrams/DFD-1.png)
+![DFD-1](diagrams/DFD-1.png)
 
 ### Level 2
 
 A level 2 data flow diagram goes into greater detail for a portion of the system.
+
+Here the LAN and local hub are examined in more detail. The hub is divided into four tasks:
+
+1. A web server to requests from the web and app UIs
+2. Internet communications to manage interactions with upstream command and control, OTA update, and
+   analytics servers.
+3. Device communications to manage interactions with local smart devices
+4. A secure core to authenticate and isolate operations of mixed criticality
+
+The model is populated with example smart devices to help elicit use cases, misuse cases, and
+threats. The wireless router is shown to remind the analyst of its presence on the LAN. Because all
+traffic is routed through it, it would be impractical to show all the connections, but it is
+important to consider its presence. As with the level 1 diagram, only resources and logs relevant to
+this level of abstraction are shown.
+
+![DFD-2-LAN](diagrams/DFD-2-LAN.png)
 
 ## STRIDE Threats
 
