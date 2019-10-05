@@ -22,6 +22,12 @@ This is a project for GVSU's Information Security Principles course (CIS 615). S
     - [Level 1](#level-1)
     - [Level 2](#level-2)
   - [STRIDE Threats](#stride-threats)
+    - [Spoofing](#spoofing)
+    - [Tampering](#tampering)
+    - [Repudiation](#repudiation)
+    - [Information Disclosure](#information-disclosure)
+    - [Denial of Service](#denial-of-service)
+    - [Escalation of Privilege](#escalation-of-privilege)
   - [Threat Tree](#threat-tree)
   - [Risks with DREAD and FAIR](#risks-with-dread-and-fair)
 - [License](#license)
@@ -78,6 +84,75 @@ this level of abstraction are shown.
 ![DFD-2-LAN](diagrams/DFD-2-LAN.png)
 
 ## STRIDE Threats
+
+STRIDE is a method that can be used to elicit threats in a system. A team can use basic STRIDE,
+STRIDE-per-element, or Microsoft's STRIDE-based game
+[Escalation of Privilege](https://social.technet.microsoft.com/wiki/contents/articles/285.elevation-of-privilege-the-game.aspx).
+This list was created with basic STRIDE, is not exhaustive, and is not in order of risk or severity.
+
+### Spoofing
+
+| Number | Operational Base | Identity Spoofed                    | With Respect To |
+| ------ | ---------------- | ----------------------------------- | --------------- |
+| S.1    | WAN              | an ACME admin or developer          | backend servers |
+| S.2    | WAN              | the ACME command and control server | a local hub     |
+| S.3    | WAN              | the ACME OTA update server          | a local hub     |
+| S.4    | WAN              | a user                              | the web backend |
+| S.5    | user's LAN       | a user                              | the local hub   |
+| S.6    | user's LAN       | the local hub                       | a smart device  |
+| S.7    | user's LAN       | a smart device                      | the local hub   |
+
+### Tampering
+
+| Number | Operational Base | Resource Tampered |
+| ------ | ---------------- | ----------------- |
+| T.1    | data center      | web resources     |
+| T.2    | data center      | user database     |
+| T.3    | local hub device | web resources     |
+| T.4    | local hub device | config files      |
+
+### Repudiation
+
+| Number | Operational Base | Activity Repudiated                              |
+| ------ | ---------------- | ------------------------------------------------ |
+| R.1    | ACME LAN         | admin operations on data center resources        |
+| R.2    | ACME LAN         | developer software updates and deployments       |
+| R.3    | data center      | web server interactions with account management  |
+| R.4    | data center      | web server interactions with command and control |
+| R.5    | local hub device | external (WAN, LAN) interactions with local hub  |
+| R.6    | local hub device | system interactions with secure core             |
+
+### Information Disclosure
+
+| Number | Operational Base | Information Disclosed  | Source of Interception                               |
+| ------ | ---------------- | ---------------------- | ---------------------------------------------------- |
+| I.1    | WAN              | user database          | transit between data center and ACME LAN             |
+| I.2    | data center      | user database          | on disk                                              |
+| I.3    | ACME LAN         | ACME admin credentials | on disk                                              |
+| I.4    | user's LAN       | user credentials       | on disk                                              |
+| I.5    | user's LAN       | device status          | in transit between device and local hub              |
+| I.6    | WAN              | device status          | in transit between command and control and local hub |
+
+### Denial of Service
+
+| Number | Operational Base                   | Service Denied                   | Overloaded Resource          |
+| ------ | ---------------------------------- | -------------------------------- | ---------------------------- |
+| D.1    | WAN                                | user access to web backend       | network bandwidth            |
+| D.2    | WAN                                | user access to web backend       | server connections           |
+| D.3    | on-device                          | logging                          | disk usage                   |
+| D.4    | physical proximity to WiFi         | smart device access to local hub | wireless bandwidth           |
+| D.5    | physical proximity to smart device | smart->physical device control   | electro-mechanical interface |
+
+### Escalation of Privilege
+
+| Number | Operational Base | Privilege Gained                    | Escalation Mechanism                |
+| ------ | ---------------- | ----------------------------------- | ----------------------------------- |
+| E.1    | WAN              | shell on web server                 | vulnerability in web server         |
+| E.2    | WAN              | admin access to data center servers | compromised ACME credentials        |
+| E.3    | WAN              | user access to web backend          | compromised user credentials        |
+| E.4    | user privilege   | root privilege                      | vulnerability in privileged program |
+| E.5    | user privilege   | root privilege                      | insecure configuration              |
+| E.6    | local hub device | access to secure core               | vulnerability in application        |
 
 ## Threat Tree
 

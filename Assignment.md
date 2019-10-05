@@ -34,7 +34,8 @@ please ask on the project 1 discussion forum.
 3. Identify threats using the STRIDE method. Be thorough, but include only realistic threats. Do not
    include several threats that are near duplicates of each other ("infects system with virus X" and
    "infects system with virus Y" should not be separate items). Threats with differing likelihood or
-   impact should not be grouped.
+   impact should not be grouped. You must identify at least 20 threats, which must include at least
+   one in each stride category.
 4. For at least 5 of the threats you identified, determine the risk associated with the threat. You
    may use any of the methods which will be discussed in week 5 videos, but your answers should be
    justified.
