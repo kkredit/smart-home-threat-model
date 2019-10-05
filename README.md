@@ -1,7 +1,7 @@
 
-# Smart Home Threat Model
+# Smart Home Threat Model <!-- omit in toc -->
 
-## Overview
+## Overview <!-- omit in toc -->
 
 This project is a partial threat model for a smart home system consisting of a front end system that
 has interactions with users, some type of authentication, and interactions with at least one back
@@ -11,11 +11,8 @@ end server.
 This is a project for GVSU's Information Security Principles course (CIS 615). See the
 [assignment](Assignment.md) for more details.
 
-## Contents
+## Contents <!-- omit in toc -->
 
-- [Smart Home Threat Model](#smart-home-threat-model)
-  - [Overview](#overview)
-  - [Contents](#contents)
 - [Threat Model](#threat-model)
   - [Data Flow Diagrams](#data-flow-diagrams)
     - [Level 0](#level-0)
