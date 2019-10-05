@@ -25,7 +25,7 @@ This is a project for GVSU's Information Security Principles course (CIS 615). S
     - [Information Disclosure](#information-disclosure)
     - [Denial of Service](#denial-of-service)
     - [Escalation of Privilege](#escalation-of-privilege)
-  - [Threat Tree](#threat-tree)
+  - [Attack Tree](#attack-tree)
   - [Risks with DREAD and FAIR](#risks-with-dread-and-fair)
 - [License](#license)
 
@@ -121,14 +121,15 @@ This list was created with basic STRIDE, is not exhaustive, and is not in order 
 
 ### Information Disclosure
 
-| Number | Operational Base | Information Disclosed  | Source of Interception                               |
-| ------ | ---------------- | ---------------------- | ---------------------------------------------------- |
-| I.1    | WAN              | user database          | transit between data center and ACME LAN             |
-| I.2    | data center      | user database          | on disk                                              |
-| I.3    | ACME LAN         | ACME admin credentials | on disk                                              |
-| I.4    | user's LAN       | user credentials       | on disk                                              |
-| I.5    | user's LAN       | device status          | in transit between device and local hub              |
-| I.6    | WAN              | device status          | in transit between command and control and local hub |
+| Number | Operational Base                   | Information Disclosed  | Source of Interception                               |
+| ------ | ---------------------------------- | ---------------------- | ---------------------------------------------------- |
+| I.1    | WAN                                | user database          | transit between data center and ACME LAN             |
+| I.2    | data center                        | user database          | on disk                                              |
+| I.3    | ACME LAN                           | ACME admin credentials | on disk                                              |
+| I.4    | user's LAN                         | user credentials       | on disk                                              |
+| I.5    | WAN                                | device status          | in transit between command and control and local hub |
+| I.6    | user's LAN                         | device status          | in transit between device and local hub              |
+| I.7    | physical proximity to smart device | device status          | direct observation of physical device                |
 
 ### Denial of Service
 
@@ -151,7 +152,14 @@ This list was created with basic STRIDE, is not exhaustive, and is not in order 
 | E.5    | user privilege   | root privilege                      | insecure configuration              |
 | E.6    | local hub device | access to secure core               | vulnerability in application        |
 
-## Threat Tree
+## Attack Tree
+
+An attack tree graphically represents the means an attacker could use to achieve an objective.
+
+Here an attack on information confidentiality of device status is analyzed. This threat corresponds
+to threats I.5, I.6, and I.7 in the STRIDE analysis.
+
+![attack-tree](diagrams/attack-tree.png)
 
 ## Risks with DREAD and FAIR
 
