@@ -34,6 +34,7 @@ This is a project for GVSU's Information Security Principles course (CIS 615). S
     - [Two Risks Analyzed with FAIR](#two-risks-analyzed-with-fair)
       - [Vulnerability 4: Insecure MQTT Server](#vulnerability-4-insecure-mqtt-server)
       - [Vulnerability 5: Device Manipulation](#vulnerability-5-device-manipulation)
+  - [Summary](#summary)
 - [License](#license)
 
 # Threat Model
@@ -207,7 +208,7 @@ evidence that the system is installed turns from a security asset to a liability
 | Exploitability  | 10            | No skill required                                                       |
 | Affected Users  | 4             | Slightly less than half of installations externally visible             |
 | Discoverability | 9             | Clearly visible for any installation with external devices or a sticker |
-| **Risk**        | **5.2**       | Mitigations: maintain reputation so it's a feature, not a bug           |
+| **Risk**        | **5.2**       | Mitigation: maintain reputation so it's a feature, not a bug            |
 
 #### Vulnerability 2: Router Password Crack
 
@@ -236,24 +237,55 @@ in to the new platform. This vulnerability is a flaw in the device setup protoco
 devices to force the unauthenticated device mode. It also requires the capability to device
 addition without user interaction.
 
-| Category        | Rating (0-10) | Comments                                                                |
-| --------------- | ------------- | ----------------------------------------------------------------------- |
-| Damage          | 2             | Without other known vulnerabilities, does not do much harm              |
-| Reproducibility | 10            | Fully reliable and automatable                                          |
-| Exploitability  | 5             | Requires custom but uncomplicated software to conduct the attack        |
-| Affected Users  | 5             | Only affects users with insecure LANs                                   |
-| Discoverability | 10            | Everywhere, because it is a feature                                     |
-| **Risk**        | **6.4**       | Mitigations: require authenticated user involvement during device setup |
+| Category        | Rating (0-10) | Comments                                                               |
+| --------------- | ------------- | ---------------------------------------------------------------------- |
+| Damage          | 2             | Without other known vulnerabilities, does not do much harm             |
+| Reproducibility | 10            | Fully reliable and automatable                                         |
+| Exploitability  | 5             | Requires custom but uncomplicated software to conduct the attack       |
+| Affected Users  | 5             | Only affects users with insecure LANs                                  |
+| Discoverability | 10            | Everywhere, because it is a feature                                    |
+| **Risk**        | **6.4**       | Mitigation: require authenticated user involvement during device setup |
 
 ### Two Risks Analyzed with FAIR
+
+Factor analysis of information risk has here been simplified into a bottom-up tree with severity
+scores ranging form 0-10 in order to create a simple comparison to the DREAD scores. Regardless of
+wording of the element, a higher score is a worse security outcome.
 
 #### Vulnerability 4: Insecure MQTT Server
 
 Vulnerability: buffer overflow in MQTT server over-exposes data.
 
+Description: Many IoT devices and hubs communicate using MQTT. This hypothetical vulnerability is a
+buffer overflow in the subscription expression parser of the hub device's MQTT server component. The
+overflow allows a user to subvert ACLs and access all device data. (It is possible to achieve a
+similar effect trivially if ACLs are not configured or are misconfigured.) For this example, assume
+the MQTT server is written in C.
+
+![fair-4-mqtt](diagrams/fair-4-mqtt.png)
+
+| Category | Rating (0-10) | Comments                                                         |
+| -------- | ------------- | ---------------------------------------------------------------- |
+| **Risk** | **4.5**       | Mitigations: secure coding practices; use a memory-safe language |
+
 #### Vulnerability 5: Device Manipulation
 
 Vulnerability: poorly configured hub rules allow indirect manipulation of other devices.
+
+Description: One purpose of smart home devices is to create emergent behavior. A user could create a
+rule saying that the front door should unlock 30 seconds after the garage is opened, or the security
+alarm should be disabled when more than one person is home. At this point in the attack chain we
+already have device information and spoofing capabilities. This vulnerability is an insecure rule
+configuration that allows the state of unauthenticated (spoofable) devices to influence the behavior
+of real devices.
+
+![fair-5-rules](diagrams/fair-5-rules.png)
+
+| Category | Rating (0-10) | Comments                                                                |
+| -------- | ------------- | ----------------------------------------------------------------------- |
+| **Risk** | **3**         | Mitigation: disallow rules that take input from unauthenticated devices |
+
+## Summary
 
 # License
 
