@@ -25,8 +25,15 @@ This is a project for GVSU's Information Security Principles course (CIS 615). S
     - [Information Disclosure](#information-disclosure)
     - [Denial of Service](#denial-of-service)
     - [Escalation of Privilege](#escalation-of-privilege)
-  - [Attack Tree](#attack-tree)
-  - [Risks with DREAD and FAIR](#risks-with-dread-and-fair)
+  - [Attack Tree: Confidentiality Compromise](#attack-tree-confidentiality-compromise)
+  - [DREAD and FAIR](#dread-and-fair)
+    - [Three Risks Analyzed with DREAD](#three-risks-analyzed-with-dread)
+      - [Vulnerability 1: Geographic Discovery](#vulnerability-1-geographic-discovery)
+      - [Vulnerability 2: Router Password Crack](#vulnerability-2-router-password-crack)
+      - [Vulnerability 3: Device Spoofing](#vulnerability-3-device-spoofing)
+    - [Two Risks Analyzed with FAIR](#two-risks-analyzed-with-fair)
+      - [Vulnerability 4: Insecure MQTT Server](#vulnerability-4-insecure-mqtt-server)
+      - [Vulnerability 5: Device Manipulation](#vulnerability-5-device-manipulation)
 - [License](#license)
 
 # Threat Model
@@ -152,7 +159,7 @@ This list was created with basic STRIDE, is not exhaustive, and is not in order 
 | E.5    | user privilege   | root privilege                      | insecure configuration              |
 | E.6    | local hub device | access to secure core               | vulnerability in application        |
 
-## Attack Tree
+## Attack Tree: Confidentiality Compromise
 
 An attack tree graphically represents the means an attacker could use to achieve an objective.
 
@@ -161,7 +168,92 @@ to threats I.5, I.6, and I.7 in the STRIDE analysis.
 
 ![attack-tree](diagrams/attack-tree.png)
 
-## Risks with DREAD and FAIR
+## DREAD and FAIR
+
+DREAD and FAIR are two methods of quantifying risk. DREAD averages the scores rated 0-10 for damage,
+reproducibility, exploitability, affected users, and discoverability. FAIR, or factor analysis
+of information risk, takes a more methodical approach. FAIR is a complex method that is caricatured
+here.
+
+In order to calculate risk, one must consider specific vulnerabilities that enable threats to be
+realized. To build on the attack tree example, hypothetical vulnerabilities leading to a complete
+device status disclosure attack chain will be analyzed.
+
+One way of capitalizing on smart home system vulnerabilities is to read and manipulate device
+status in order to enable theft. Though this example requires physical presence in order to be
+executed, many remote attacks are conceivable. A complete threat model would consider those
+as well.
+
+### Three Risks Analyzed with DREAD
+
+Damage, affected users, and discoverability are fairly clear terms. Reproducibility and
+exploitability are a bit more nebulous and overlapping. Here to be reproducible means able to be
+reliably triggered via an automated attack, and to be exploitable means able to be triggered by an
+attacker of low skill level.
+
+#### Vulnerability 1: Geographic Discovery
+
+Vulnerability: conspicuous installation enables geographic discoverablity of hub instance.
+
+Description: driving through a neighborhood, attackers can identify homes equipped with the ACME
+smart home system due to visible ACME smart devices on the home exterior and window stickers
+advertising the ACME security system. Because the attackers know the system is vulnerable, such
+evidence that the system is installed turns from a security asset to a liability.
+
+| Category        | Rating (0-10) | Comments                                                                |
+| --------------- | ------------- | ----------------------------------------------------------------------- |
+| Damage          | 0             | Lacking known vulnerabilities, is actually a feature                    |
+| Reproducibility | 3             | Reliable but not automatable                                            |
+| Exploitability  | 10            | No skill required                                                       |
+| Affected Users  | 4             | Slightly less than half of installations externally visible             |
+| Discoverability | 9             | Clearly visible for any installation with external devices or a sticker |
+| **Risk**        | **5.2**       | Mitigations: maintain reputation so it's a feature, not a bug           |
+
+#### Vulnerability 2: Router Password Crack
+
+Vulnerability: brute forcible password on WiFi router allows access to LAN.
+
+Description: to gain a foothold on the LAN, the simplest way is to guess the WiFi router's password.
+Many users choose names of their pets, parts of their address, or simple phrases. Brute force
+attacks based on contextual information could be quite successful.
+
+| Category        | Rating (0-10) | Comments                                                                           |
+| --------------- | ------------- | ---------------------------------------------------------------------------------- |
+| Damage          | 9             | Even without an attack on the ACME system, it is bad to have attackers on your LAN |
+| Reproducibility | 8             | Semi-reliable, fully automatable                                                   |
+| Exploitability  | 8             | No skill required                                                                  |
+| Affected Users  | 6             | Many users use poor passwords                                                      |
+| Discoverability | 1             | No way to discover the vulnerability without running the attack                    |
+| **Risk**        | **6.8**       | Mitigations: train users; display strong warning if on LAN with weak password      |
+
+#### Vulnerability 3: Device Spoofing
+
+Vulnerability: forced fallback to unverified smart devices allows device spoofing.
+
+Description: one can imagine developers designing device authentication into the ACME smart home
+system, and having marketing push for a fallback so that all past smart devices can be grandfathered
+in to the new platform. This vulnerability is a flaw in the device setup protocol that allows
+devices to force the unauthenticated device mode. It also requires the capability to device
+addition without user interaction.
+
+| Category        | Rating (0-10) | Comments                                                                |
+| --------------- | ------------- | ----------------------------------------------------------------------- |
+| Damage          | 2             | Without other known vulnerabilities, does not do much harm              |
+| Reproducibility | 10            | Fully reliable and automatable                                          |
+| Exploitability  | 5             | Requires custom but uncomplicated software to conduct the attack        |
+| Affected Users  | 5             | Only affects users with insecure LANs                                   |
+| Discoverability | 10            | Everywhere, because it is a feature                                     |
+| **Risk**        | **6.4**       | Mitigations: require authenticated user involvement during device setup |
+
+### Two Risks Analyzed with FAIR
+
+#### Vulnerability 4: Insecure MQTT Server
+
+Vulnerability: buffer overflow in MQTT server over-exposes data.
+
+#### Vulnerability 5: Device Manipulation
+
+Vulnerability: poorly configured hub rules allow indirect manipulation of other devices.
 
 # License
 
