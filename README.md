@@ -3,10 +3,10 @@
 
 ## Overview <!-- omit in toc -->
 
-This project is a partial threat model for a smart home system consisting of a front end system that
-has interactions with users, some type of authentication, and interactions with at least one back
-end server.
-<!-- TODO: update description when I've fleshed it out. -->
+This project is a partial threat model for a fictional ACME smart home system consisting of a web
+and mobile UI, a cloud-deployed backend, local hub instances, and smart devices. The model consists
+of level 0, 1, and 2 data flow diagrams; STRIDE threat analysis; an attack tree; and risk analysis
+with DREAD and FAIR.
 
 This is a project for GVSU's Information Security Principles course (CIS 615). See the
 [assignment](Assignment.md) for more details.
@@ -39,8 +39,6 @@ This is a project for GVSU's Information Security Principles course (CIS 615). S
 
 # Threat Model
 
-<!-- TODO: write basic system description -->
-
 ## Data Flow Diagrams
 
 ### Level 0
@@ -72,7 +70,7 @@ this level.
 
 A level 2 data flow diagram goes into greater detail for a portion of the system.
 
-Here the LAN and local hub are examined in more detail. The hub is divided into four tasks:
+Here the LAN and local hub are examined in more detail. The hub is divided into four processes:
 
 1. A web server to requests from the web and app UIs
 2. Internet communications to manage interactions with upstream command and control, OTA update, and
@@ -286,6 +284,15 @@ of real devices.
 | **Risk** | **3**         | Mitigation: disallow rules that take input from unauthenticated devices |
 
 ## Summary
+
+This partial threat model has analyzed a fictional ACME smart home system through the use of data
+flow diagrams, STRIDE analysis, attack trees, and risk analysis.
+
+The vulnerabilities analyzed take the attacker through all stages of target acquisition, perimeter
+exploitation, privilege escalation, and objective completion. While none of the vulnerabilities
+were particularly severe on their own, when taken together they allow an attacker to compromise the
+fundamental confidentiality and integrity of the system. In this case, the attacker would be able to
+discern and affect the state of smart devices in the home, enabling a crime such as theft.
 
 # License
 
